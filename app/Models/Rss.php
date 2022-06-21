@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -31,4 +32,9 @@ class Rss extends Model
      * @var array
      */
     protected $fillable = ['user_id', 'rss', 'created_at', 'updated_at'];
+
+    public function user_id()
+    {
+        return $this->hasOne(User::class);
+    }
 }

@@ -40,7 +40,7 @@ class RegisteredRssController extends Controller
 
         $rss = Rss::create([
             'rss' => $request->rss,
-            'user->id' => Auth::user->id
+            'user_id' => Auth::id()
         ]);
 
         event(new Registered($rss));
