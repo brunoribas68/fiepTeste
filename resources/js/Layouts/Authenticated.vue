@@ -33,6 +33,9 @@ const showingNavigationDropdown = ref(false);
                                 <BreezeNavLink :href="route('registerRss')" :active="route().current('registerRss')">
                                     Registrar Rss
                                 </BreezeNavLink>
+                                <BreezeNavLink :href="route('editarRss')" :active="route().current('editarRss')">
+                                    Editar Rss's
+                                </BreezeNavLink>
                             </div>
                         </div>
 

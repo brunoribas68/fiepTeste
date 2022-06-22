@@ -3,16 +3,19 @@ import BreezeButton from "@/Components/Button.vue";
 import BreezeInput from "@/Components/Input.vue";
 import BreezeLabel from "@/Components/Label.vue";
 import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
-import { Head, useForm } from "@inertiajs/inertia-vue3";
+import { Head, useForm, usePage } from "@inertiajs/inertia-vue3";
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
+import { computed } from 'vue'
+
+const rss = computed(() => usePage().props.value.rss)
 
 const form = useForm({
-    rss: "",
+    rss: rss.value.rss
 });
-
-const submit = () => {
-    form.post(route("registerRss"), {});
-};
+function submit() {
+    form.post(route('editRss', {id: rss.value.id}), {});
+    
+}
 </script>
 
 
@@ -41,6 +44,7 @@ const submit = () => {
                     v-model="form.rss"
                     required
                     autofocus
+                    :value="form.rss"
                     autocomplete="rss"
                     />
                 </div>
@@ -51,7 +55,7 @@ const submit = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                     >
-                    Cadastrar
+                    Editar
                     </BreezeButton>
                 </div>
                 </form>

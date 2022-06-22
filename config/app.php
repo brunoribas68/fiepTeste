@@ -196,7 +196,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Krlove\EloquentModelGenerator\Provider\GeneratorServiceProvider::class,
-
+        Vedmant\FeedReader\FeedReaderServiceProvider::class,
 
     ],
 
@@ -213,6 +213,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'FeedReader' => Vedmant\FeedReader\Facades\FeedReader::class, 
     ])->toArray(),
 
 ];

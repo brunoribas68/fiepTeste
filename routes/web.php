@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Rss\RegisteredRssController;
+use App\Http\Controllers\Rss\ProcessRssController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,14 +25,17 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::controller(ProcessRssController::class)->group(function () {
+    Route::get('dashboard', 'readRss')->middleware(['auth', 'verified'])->name('dashboard');
+});
 
 require __DIR__.'/auth.php';
 
-Route::get('registerRss', [RegisteredRssController::class, 'create'])
-->name('registerRss');
-
-Route::post('registerRss', [RegisteredRssController::class, 'store']);
+Route::controller(RegisteredRssController::class)->group(function () {
+    Route::get('registerRss', 'create')->name('registerRss');
+    Route::post('registerRss', 'store');
+    Route::get('editarRss', 'list')->name('editarRss');
+    Route::delete('deletarRss/{id}', 'delete')->name('deletarRss');
+    Route::get('editRss/{id}', 'edit')->name('editRss');
+    Route::post('editRss/{id}', 'edited');
+});
