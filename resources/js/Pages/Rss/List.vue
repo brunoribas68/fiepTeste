@@ -1,9 +1,8 @@
 <script setup>
     import { computed } from 'vue'
-    import { usePage, Head } from '@inertiajs/inertia-vue3'
+    import { usePage, Head, Link } from '@inertiajs/inertia-vue3'
     import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
     import { TrashIcon, PlusCircleIcon, PencilAltIcon} from '@heroicons/vue/solid'
-    import { Link } from '@inertiajs/inertia-vue3'
     const rss_list = computed(() => usePage().props.value.rss)
 </script>
 

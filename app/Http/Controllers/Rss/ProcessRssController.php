@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Http;
 class ProcessRssController extends Controller
 {
     public function readRss(){
+
         $rss = Rss::first();
         $feed = FeedReader::read($rss->rss);
         $noticias = [];
-        dd("requisição ainda muito grande");
         foreach ($feed->get_items() as $f) {
             $noticias[] = [
                 'title' => $f->get_title(),
@@ -26,10 +26,10 @@ class ProcessRssController extends Controller
                 'sentimento' => $this->sentimentalClassifier($f->get_content())
             ];
         }
-
         return Inertia::render('Dashboard',[
-            'noticias' => $noticias
+            'noticias' => Inertia::lazy(fn () => $noticias),
         ]);
+
     }
 
     public function themeClassifier($texto){
