@@ -27,7 +27,7 @@ class ProcessRssController extends Controller
             ];
         }
         return Inertia::render('Dashboard',[
-            'noticias' => Inertia::lazy(fn () => $noticias),
+            'noticias' => $noticias
         ]);
 
     }

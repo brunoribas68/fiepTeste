@@ -199,6 +199,7 @@ return [
         Vedmant\FeedReader\FeedReaderServiceProvider::class,
 
     ],
+    'mix_url' => env('MIX_ASSET_URL', 'localhost'),
 
     /*
     |--------------------------------------------------------------------------
