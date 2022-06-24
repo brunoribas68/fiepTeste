@@ -11,8 +11,12 @@ use Illuminate\Support\Facades\Http;
 
 class ProcessRssController extends Controller
 {
+    /**
+     * Read a Rss from a valid link
+     * 
+     * @return \Inertia\Response
+    */
     public function readRss(){
-
         $rss = Rss::first();
         $feed = FeedReader::read($rss->rss);
         $noticias = [];
@@ -31,7 +35,11 @@ class ProcessRssController extends Controller
         ]);
 
     }
-
+    /**
+     * Indentify a theme from a text(in this case a news text)
+     * @param  String $texto 
+     * @return Array from a API
+    */
     public function themeClassifier($texto){
         $response = Http::attach(
             'key', env('MEANING_KEY')
@@ -42,7 +50,11 @@ class ProcessRssController extends Controller
         )->timeout(60)->post(env('MEANING_HOST')."class-2.0");
         return $response->json()["category_list"][0]['label'];
     }
-
+    /**
+     * Indentify a sentimental in the given text(in this case a news text)
+     * @param  String $texto 
+     * @return Array from a API
+    */
     public function sentimentalClassifier($texto){
         $response = Http::attach(
             'key', env('MEANING_KEY')
