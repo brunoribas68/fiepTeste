@@ -17,18 +17,26 @@ class ProcessRssController extends Controller
      * @return \Inertia\Response
     */
     public function readRss(){
-        $rss = Rss::first();
-        $feed = FeedReader::read($rss->rss);
-        $noticias = [];
-        foreach ($feed->get_items() as $f) {
-            $noticias[] = [
-                'title' => $f->get_title(),
-                'content' => $f->get_content(),
-                'author' => $f->get_author(),
-                'data' => date("d-m-Y h:i:s", strtotime($f->get_date())),
-                'tema' => $this->themeClassifier($f->get_content()),
-                'sentimento' => $this->sentimentalClassifier($f->get_content())
-            ];
+        $rsss = Rss::get();
+        if($rsss->count() == 0){
+            return Inertia::render('Dashboard',[
+                'noticias' => []
+            ]);
+        }
+
+        foreach($rsss as $rss){
+            $feed = FeedReader::read($rss->rss);
+            $noticias = [];
+            foreach ($feed->get_items() as $f) {
+                $noticias[] = [
+                    'title' => $f->get_title(),
+                    'content' => $f->get_content(),
+                    'author' => $f->get_author(),
+                    'data' => date("d-m-Y h:i:s", strtotime($f->get_date())),
+                    'tema' => $this->themeClassifier($f->get_content()),
+                    'sentimento' => $this->sentimentalClassifier($f->get_content())
+                ];
+            }
         }
         return Inertia::render('Dashboard',[
             'noticias' => $noticias
